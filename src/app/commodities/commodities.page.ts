@@ -51,4 +51,8 @@ buy = []
     })
     return await modal.present()
   }
+  reset(){
+    this.total = 0
+    this.buy = []
+  }
 }
