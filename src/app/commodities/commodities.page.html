@@ -13,16 +13,29 @@
 <ion-content>
   <ion-grid>
     <ion-row *ngFor="let commodity of commodities">
-      <ion-col (click)="addTotal(commodity[0])">
+      <ion-col>
         <div>
-          <img src="{{commodity[0].img}}" alt="{{commodity[0].name}}">
-          <ion-badge color="primary">{{commodity[0].amount}}</ion-badge>
+          <img (click)="addTotal(commodity[0])" src="{{commodity[0].img}}" alt="{{commodity[0].name}}">
+          <ion-button (click)="reduceAmount(commodity[0])">
+              <ion-icon name="remove"></ion-icon>
+          </ion-button>
+          <ion-button color="{{cekAmount(commodity[0])}}">{{commodity[0].amount}}</ion-button>
+          <ion-button (click)="addTotal(commodity[0])">
+            <ion-icon name="add"></ion-icon>
+          </ion-button>
+          
         </div>
       </ion-col>
-      <ion-col (click)="addTotal(commodity[1])">
+      <ion-col>
         <div>
-          <img src="{{commodity[1].img}}" alt="{{commodity[1].name}}">
-          <ion-badge color="{{cekAmount(commodity[1])}}">{{commodity[1].amount}}</ion-badge>
+          <img (click)="addTotal(commodity[1])" src="{{commodity[1].img}}" alt="{{commodity[1].name}}">
+          <ion-button (click)="reduceAmount(commodity[1])">
+              <ion-icon name="remove"></ion-icon>
+          </ion-button>
+          <ion-button color="{{cekAmount(commodity[1])}}">{{commodity[1].amount}}</ion-button>
+          <ion-button (click)="addTotal(commodity[1])">
+              <ion-icon name="add"></ion-icon>
+          </ion-button>
         </div>
       </ion-col>
     </ion-row>

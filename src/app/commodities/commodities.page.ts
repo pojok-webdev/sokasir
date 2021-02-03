@@ -52,6 +52,7 @@ buy = []
     }
   }
   addTotal(obj){
+    console.log("Invoked",obj)
     this.checkExist(obj,this.buy)
     this.total += obj.price
     this.buy.push(obj)
@@ -68,13 +69,24 @@ buy = []
     this.buy = []
   }
   cekAmount(obj){
-    console.log("Obj",obj)
     if(obj.amount>0){
-      console.log("Should be red")
       return "danger"
     }else{
-      console.log("Should be blue")
       return "primary"
+    }
+  }
+  addAmount(obj){
+    console.log("invoked")
+    this.addTotal(obj)
+  }
+  reduceAmount(obj){
+    if(this.buy.includes(obj)){
+      let i = this.buy.indexOf(obj)
+      this.buy[i].amount = this.buy[i].amount-1
+      console.log("Remove Index of obj is ",i)
+      console.log("that remove obj exists")
+    }else{
+      console.log("that remove object doesnt exists")
     }
   }
 }
