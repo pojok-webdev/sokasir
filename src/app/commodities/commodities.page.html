@@ -14,10 +14,16 @@
   <ion-grid>
     <ion-row *ngFor="let commodity of commodities">
       <ion-col (click)="addTotal(commodity[0])">
-        <div><img src="{{commodity[0].img}}" alt="{{commodity[0].name}}"></div>
+        <div>
+          <img src="{{commodity[0].img}}" alt="{{commodity[0].name}}">
+          <ion-badge color="primary">{{commodity[0].amount}}</ion-badge>
+        </div>
       </ion-col>
       <ion-col (click)="addTotal(commodity[1])">
-        <div><img src="{{commodity[1].img}}" alt="{{commodity[1].name}}"></div>
+        <div>
+          <img src="{{commodity[1].img}}" alt="{{commodity[1].name}}">
+          <ion-badge color="{{cekAmount(commodity[1])}}">{{commodity[1].amount}}</ion-badge>
+        </div>
       </ion-col>
     </ion-row>
   </ion-grid>
