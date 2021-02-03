@@ -16,7 +16,7 @@ export class AppComponent {
       icon: 'apps-outline'
     }
   ];
-  public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Total'];
+  public labels = ['PadiNET', 'Kasir'];
 
   constructor(
     private platform: Platform,

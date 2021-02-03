@@ -42,19 +42,27 @@ buy = []
   }
   checkExist(obj,objarray){
     if(objarray.includes(obj)){
+      console.log("Pre Totallyy",this.total)
       let i = objarray.indexOf(obj)
+      this.total = 1*this.total + 1*obj.price
       objarray[i].amount = objarray[i].amount+1
+      objarray[i].price = objarray[i].price+obj.price
       console.log("Index of obj is ",i)
-      console.log("that obj exists")
+      console.log("that obj exists",obj)
+      console.log("Totallyy",this.total)
+      this.sum(this.buy)
     }else{
       obj.amount = 1
-      console.log("that object doesnt exists")
+      this.total = 1*this.total+ 1*obj.price
+      console.log("that object doesnt exists",this.total)
+      this.sum(this.buy)
+      objarray.push(obj)
     }
   }
   addTotal(obj){
     console.log("Invoked",obj)
-    this.checkExist(obj,this.buy)
-    this.total += obj.price
+    this.total = 1*this.total + 1*obj.price
+    //this.checkExist(obj,this.buy)
     this.buy.push(obj)
   }
   async showReceipt(){
@@ -65,6 +73,10 @@ buy = []
     return await modal.present()
   }
   reset(){
+    this.buy.every(obj=>{
+      obj.amount = 0
+      obj.price = 0
+    })
     this.total = 0
     this.buy = []
   }
@@ -80,13 +92,40 @@ buy = []
     this.addTotal(obj)
   }
   reduceAmount(obj){
+    let x = this.buy.indexOf(obj)
+    console.log("X",x)
+    if(x>=0){
+      this.total = this.total - obj.price
+      this.buy.splice(x,1)
+      this.sum(this.buy)
+    }
+  }
+  _reduceAmount(obj){
     if(this.buy.includes(obj)){
       let i = this.buy.indexOf(obj)
+      this.total = this.total - obj.price
       this.buy[i].amount = this.buy[i].amount-1
+      this.total = 1*this.total - 1*obj.price
       console.log("Remove Index of obj is ",i)
       console.log("that remove obj exists")
+      this.sum(this.buy)
     }else{
+      this.sum(this.buy)
       console.log("that remove object doesnt exists")
     }
+  }
+  sum(buy){
+    var result = [];
+    buy.reduce(function(res, value) {
+      console.log("reduce res",res)
+      console.log("reduce value",value)
+      if (!res[value.id]) {
+        res[value.id] = { id: value.id,name:value.name, amount: 0 };
+    //    result.push(res[value.Id])
+      }
+      res[value.id].amount += value.amount;
+      console.log("Res Sum",res)
+      return res;
+    }, {});
   }
 }
