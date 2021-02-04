@@ -35,9 +35,11 @@ commodities = [[{
   id:8,name:'Salad Merdeka',price: 75000,img:'../../assets/catalog/salad-merdeka.png',amount:0
 }]
 ]
-buy = []
-  constructor(private route:Router,private modal: ModalController) { }
-
+cart = []
+  constructor(private route:Router,private modal: ModalController) {
+    this.sumCart()
+  }
+simplyCart = []
   ngOnInit() {
   }
   checkExist(obj,objarray){
@@ -50,35 +52,31 @@ buy = []
       console.log("Index of obj is ",i)
       console.log("that obj exists",obj)
       console.log("Totallyy",this.total)
-      this.sum(this.buy)
+      this.sumCart
     }else{
       obj.amount = 1
       this.total = 1*this.total+ 1*obj.price
       console.log("that object doesnt exists",this.total)
-      this.sum(this.buy)
+      this.sumCart()
       objarray.push(obj)
     }
   }
   addTotal(obj){
     console.log("Invoked",obj)
     this.total = 1*this.total + 1*obj.price
-    //this.checkExist(obj,this.buy)
-    this.buy.push(obj)
+    this.cart.push(obj)
+    this.sumCart()
   }
   async showReceipt(){
     const modal = await this.modal.create({
       component:ReceiptPage,
-      componentProps:{objs:this.buy,total:this.total}
+      componentProps:{objs:this.simplyCart,total:this.total}
     })
     return await modal.present()
   }
   reset(){
-    this.buy.every(obj=>{
-      obj.amount = 0
-      obj.price = 0
-    })
     this.total = 0
-    this.buy = []
+    this.cart = []
   }
   cekAmount(obj){
     if(obj.amount>0){
@@ -92,40 +90,46 @@ buy = []
     this.addTotal(obj)
   }
   reduceAmount(obj){
-    let x = this.buy.indexOf(obj)
+    let x = this.cart.indexOf(obj)
     console.log("X",x)
     if(x>=0){
       this.total = this.total - obj.price
-      this.buy.splice(x,1)
-      this.sum(this.buy)
+      this.cart.splice(x,1)
+      this.sumCart()
     }
   }
   _reduceAmount(obj){
-    if(this.buy.includes(obj)){
-      let i = this.buy.indexOf(obj)
+    if(this.cart.includes(obj)){
+      let i = this.cart.indexOf(obj)
       this.total = this.total - obj.price
-      this.buy[i].amount = this.buy[i].amount-1
+      this.cart[i].amount = this.cart[i].amount-1
       this.total = 1*this.total - 1*obj.price
       console.log("Remove Index of obj is ",i)
       console.log("that remove obj exists")
-      this.sum(this.buy)
+      this.sumCart()
     }else{
-      this.sum(this.buy)
+      this.sumCart()
       console.log("that remove object doesnt exists")
     }
   }
-  sum(buy){
-    var result = [];
-    buy.reduce(function(res, value) {
-      console.log("reduce res",res)
-      console.log("reduce value",value)
-      if (!res[value.id]) {
-        res[value.id] = { id: value.id,name:value.name, amount: 0 };
-    //    result.push(res[value.Id])
-      }
-      res[value.id].amount += value.amount;
-      console.log("Res Sum",res)
-      return res;
-    }, {});
+  sumCart(){
+      var helper = {};
+      var result = this.cart.reduce(function(r, o) {
+        var key = o.name;
+        if(!helper[key]) {
+          helper[key] = Object.assign({}, o); // create a copy of o
+          helper[key].amount = 1
+          helper[key].subtotal = o.price
+          r.push(helper[key]);
+        } else {
+          helper[key].amount += 1;
+//          helper[key].price += o.price;
+          helper[key].subtotal = helper[key].subtotal+ o.price
+        }
+
+      return r;
+    }, []);
+    this.simplyCart = result
+    console.log("Result",result);
   }
 }

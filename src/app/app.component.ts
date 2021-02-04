@@ -14,6 +14,11 @@ export class AppComponent {
       title: 'Catalog',
       url: '/commodities',
       icon: 'apps-outline'
+    },
+    {
+      title:'Home',
+      url:'/folder/home',
+      icon:'home-outline'
     }
   ];
   public labels = ['PadiNET', 'Kasir'];
