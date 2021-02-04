@@ -132,4 +132,12 @@ simplyCart = []
     this.simplyCart = result
     console.log("Result",result);
   }
+  getAmount(id){
+    return(this.simplyCart.map(x=>{
+      if(x.id===id){
+        console.log("X",x)
+        return x.amount
+      }
+    }))
+  }
 }
