@@ -77,9 +77,10 @@ simplyCart = []
   reset(){
     this.total = 0
     this.cart = []
+    this.simplyCart = []
   }
   cekAmount(obj){
-    if(obj.amount>0){
+    if(obj>0){
       return "danger"
     }else{
       return "primary"
@@ -130,14 +131,15 @@ simplyCart = []
       return r;
     }, []);
     this.simplyCart = result
-    console.log("Result",result);
+    //console.log("Result",result);
   }
   getAmount(id){
-    return(this.simplyCart.map(x=>{
-      if(x.id===id){
-        console.log("X",x)
-        return x.amount
-      }
-    }))
+    let x = this.simplyCart.find(x=>x.id===id)
+    console.log("X",x)
+    if(x){
+      return x.amount
+    }else{
+      return 0
+    }
   }
 }
