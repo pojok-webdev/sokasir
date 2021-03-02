@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { ReceiptPage } from '../receipt/receipt.page';
+import { CrudService } from '../crud.service';
 
 @Component({
   selector: 'app-commodities',
@@ -36,7 +37,13 @@ commodities = [[{
 }]
 ]
 cart = []
-  constructor(private route:Router,private modal: ModalController) {
+  constructor(
+    private route:Router,
+    private modal: ModalController,
+    private crud:CrudService) {
+      this.crud.getCommodities(res=>{
+        console.log("COmmodities",res)
+      })
     this.sumCart()
   }
 simplyCart = []
